@@ -17,7 +17,7 @@ async def create_crypto(db: AsyncSession, crypto: CryptoCreate) -> tuple[Crypto 
     if not crypto_info:
         return None, False
 
-    new_crypto = Crypto(symbol=crypto.symbol, name=crypto_info["name"], extra_data=crypto_info)
+    new_crypto = Crypto(symbol=crypto.symbol, name=crypto_info["name"], extra_data=crypto_info, price=crypto_info["current_price"])
     db.add(new_crypto)
     await db.commit()
     return new_crypto, False
