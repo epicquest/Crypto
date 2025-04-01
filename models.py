@@ -1,7 +1,8 @@
-from sqlalchemy import Column, Integer, String, JSON, Float
+from sqlalchemy import Column, Integer, String, JSON, Float, MetaData
 from sqlalchemy.ext.declarative import declarative_base
 
-Base = declarative_base()
+metadata = MetaData()
+Base = declarative_base(metadata=metadata)
 
 class Crypto(Base):
     __tablename__ = "cryptos"
@@ -10,4 +11,4 @@ class Crypto(Base):
     name = Column(String, nullable=False)
     symbol = Column(String, unique=True, nullable=False)
     extra_data = Column(JSON)
-    price = Column(Float, unique=False, nullable=True)
+    price = Column(Float, nullable=True)

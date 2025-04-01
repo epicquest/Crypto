@@ -7,14 +7,13 @@ from models import Base
 from schemas import CryptoCreate, CryptoResponse
 from crud import create_crypto, get_crypto, get_all_cryptos, delete_crypto, update_crypto_prices
 
-app = FastAPI(title="Crypto API")
-
-
 async def async_lifespan():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
     yield
     await engine.dispose()
+
+app = FastAPI(title="Crypto API",lifespan=async_lifespan)
 
 @app.post("/cryptos/", response_model=CryptoResponse)
 async def add_crypto(crypto: CryptoCreate, db: AsyncSession = Depends(get_db)):
